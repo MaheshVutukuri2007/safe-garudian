@@ -1,0 +1,175 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import "https://unpkg.com/leaflet@1.9.4/dist/leaflet.css";
+
+@layer base {
+  :root {
+    --background: 222 47% 6%;
+    --foreground: 210 40% 95%;
+
+    --card: 222 40% 10%;
+    --card-foreground: 210 40% 95%;
+
+    --popover: 222 40% 10%;
+    --popover-foreground: 210 40% 95%;
+
+    --primary: 185 80% 55%;
+    --primary-foreground: 222 47% 6%;
+
+    --secondary: 260 60% 55%;
+    --secondary-foreground: 210 40% 98%;
+
+    --muted: 222 30% 14%;
+    --muted-foreground: 215 20% 55%;
+
+    --accent: 185 60% 20%;
+    --accent-foreground: 185 80% 75%;
+
+    --destructive: 0 72% 51%;
+    --destructive-foreground: 210 40% 98%;
+
+    --border: 222 20% 18%;
+    --input: 222 20% 18%;
+    --ring: 185 80% 55%;
+
+    --radius: 0.75rem;
+
+    --sidebar-background: 222 45% 8%;
+    --sidebar-foreground: 210 30% 75%;
+    --sidebar-primary: 185 80% 55%;
+    --sidebar-primary-foreground: 222 47% 6%;
+    --sidebar-accent: 222 30% 14%;
+    --sidebar-accent-foreground: 210 40% 95%;
+    --sidebar-border: 222 20% 16%;
+    --sidebar-ring: 185 80% 55%;
+
+    /* Custom tokens */
+    --neon-cyan: 185 80% 55%;
+    --neon-violet: 260 60% 55%;
+    --danger: 0 72% 51%;
+    --warning: 38 92% 50%;
+    --success: 142 71% 45%;
+    --glass-bg: 222 40% 10% / 0.6;
+    --glass-border: 185 80% 55% / 0.15;
+    --gradient-primary: linear-gradient(135deg, hsl(185 80% 55%), hsl(260 60% 55%));
+    --gradient-dark: linear-gradient(180deg, hsl(222 47% 8%), hsl(222 47% 4%));
+    --shadow-neon: 0 0 20px hsl(185 80% 55% / 0.3);
+    --shadow-neon-strong: 0 0 40px hsl(185 80% 55% / 0.4);
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground antialiased;
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  }
+}
+
+@layer components {
+  .glass-card {
+    @apply rounded-xl border bg-card/60 backdrop-blur-xl;
+    border-color: hsl(var(--glass-border));
+    box-shadow: var(--shadow-neon), inset 0 1px 0 0 hsl(185 80% 55% / 0.05);
+  }
+
+  .glass-card-subtle {
+    @apply rounded-xl border bg-card/40 backdrop-blur-md;
+    border-color: hsl(var(--border));
+  }
+
+  .gradient-text {
+    @apply bg-clip-text text-transparent;
+    background-image: var(--gradient-primary);
+  }
+
+  .gradient-border {
+    position: relative;
+    border: none;
+    background: hsl(var(--card));
+    border-radius: var(--radius);
+  }
+
+  .gradient-border::before {
+    content: '';
+    position: absolute;
+    inset: -1px;
+    border-radius: inherit;
+    padding: 1px;
+    background: var(--gradient-primary);
+    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+  }
+
+  .neon-glow {
+    box-shadow: var(--shadow-neon);
+  }
+
+  .neon-glow-strong {
+    box-shadow: var(--shadow-neon-strong);
+  }
+
+  .stat-card {
+    @apply glass-card p-6 transition-all duration-300;
+  }
+
+  .stat-card:hover {
+    box-shadow: var(--shadow-neon-strong);
+    transform: translateY(-2px);
+  }
+
+  .sidebar-link {
+    @apply flex items-center gap-3 px-4 py-2.5 rounded-lg text-sm font-medium transition-all duration-200;
+    color: hsl(var(--sidebar-foreground));
+  }
+
+  .sidebar-link:hover {
+    background: hsl(var(--sidebar-accent));
+    color: hsl(var(--sidebar-accent-foreground));
+  }
+
+  .sidebar-link.active {
+    background: hsl(var(--neon-cyan) / 0.12);
+    color: hsl(var(--neon-cyan));
+    box-shadow: inset 3px 0 0 hsl(var(--neon-cyan));
+  }
+
+  .severity-low {
+    @apply text-green-400 bg-green-400/10 border-green-400/20;
+  }
+
+  .severity-medium {
+    @apply text-yellow-400 bg-yellow-400/10 border-yellow-400/20;
+  }
+
+  .severity-high {
+    @apply text-orange-400 bg-orange-400/10 border-orange-400/20;
+  }
+
+  .severity-fatal {
+    @apply text-red-400 bg-red-400/10 border-red-400/20;
+  }
+}
+
+.dark-popup .leaflet-popup-content-wrapper {
+  background: hsl(222 40% 10%);
+  color: hsl(210 40% 95%);
+  border: 1px solid hsl(222 20% 18%);
+  border-radius: 12px;
+  box-shadow: 0 0 20px hsl(185 80% 55% / 0.15);
+}
+
+.dark-popup .leaflet-popup-tip {
+  background: hsl(222 40% 10%);
+}
+
+.leaflet-container {
+  background: hsl(222 47% 6%) !important;
+}
